@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bufio"
+	"encoding/csv"
 	"fmt"
 	"os"
 )
@@ -17,11 +17,12 @@ func main() {
   check(err)
   defer file.Close()
 
-  scanner := bufio.NewScanner(file)
+  csvReader := csv.NewReader(file)
+  records, err := csvReader.ReadAll()
+  check(err)
 
-  for scanner.Scan() {
-    fmt.Println(scanner.Text())
+  for _, row := range records {
+    fmt.Println(row[3])
   }
-  check(scanner.Err())
 }
 
